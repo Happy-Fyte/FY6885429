@@ -136,7 +136,7 @@
     
     <h3 id="Introduction">Introduction</h3>
     <div class="content">
-        <p>
+        <p id="Introduction_InText">
             Online shopping lacks the tactile experience of in-person shopping. Augmented Reality bridges this gap by providing consumers with a more interactive and realistic product experience, reflecting the product's quality more effectively than traditional e-commerce methods.
         </p>
     </div>
@@ -144,7 +144,7 @@
     
     <h4>Table 1: Data on Satisfaction with AR Implementations</h4>
     <h3>Referenced from <a href="https://www-sciencedirect-com.surrey.idm.oclc.org/science/article/pii/S0747563222004666">Aditya et al. (2023)</a></h3>
-    <table>
+    <table id="Table_InText">
         <tr>
             <th>AR Category</th>
             <th>Product/Device</th>
@@ -198,7 +198,7 @@
    
     <h3 id="Analysis">Analysis and Discussion</h3>
     <div class="content">
-        <p>
+        <p id="Analysis and Discussion">
             Many examples of AR have been very successful like through games like Pokémon GO where 3D models of the Pokémon would be rendered into the real world to allow for a seamless experience leading to it becoming an instant hit. A recent development in AR was through the consumerism base through implementing products for sale in 3D models so that people can interact with the product they are buying without physically being at the store to pick it up and use it. 
             This lets shoppers virtually explore items in their own environments, enhancing the online shopping experience by making it more immersive and informative even without visiting a store in person. In the beauty industry specifically this has been a major development as beauty products are a main focus in many studies as AR has been the most effective in this area.
             Cognitive control, the ability to evaluate options effectively, plays a crucial role in AR experiences. Studies show that positive peer opinions can enhance a consumer's understanding and trust in a product. AR helps consumers better predict product performance, leading to higher purchase intention. However, gender effects were not considered in the study as it focused solely on lipstick products.
@@ -214,6 +214,89 @@
     </div>
 <video src="lololol.mp4" width="800" height="450" controls>
 </video>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Adding last update ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+    <!-- Last commit time display -->
+<div id="last-updated">Loading last update time...</div>
+<!-- Verify Button -->
+<button onclick="verifyLastUpdatedTime()" style="display: block; margin: 10px auto; padding: 8px 16px;">
+    Verify Last Modified Time
+</button>
+<script>
+    async function getLastUpdatedTime() {
+        const username = 'Happy-Fyte';
+        const repo = 'FY6885429';
+       
+        const url = `https://api.github.com/repos/${username}/${repo}/commits`;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.status} - ${response.statusText}`);
+            }
+            const commits = await response.json();
+            if (commits && commits.length > 0) {
+                const lastCommitDate = new Date(commits[0].commit.committer.date);
+               
+                // Displaying the time on load
+                document.getElementById('last-updated').innerText = `Last Modified Time: ${lastCommitDate.toLocaleString()}`;
+            } else {
+                document.getElementById('last-updated').innerText = 'No commits found in the repository.';
+            }
+        } catch (error) {
+            console.error('Error fetching the last updated time:', error);
+            document.getElementById('last-updated').innerText = 'Error fetching update time. Please check the repository details.';
+        }
+    }
+    // Function to verify the last update time by re-fetching it from the API
+    async function verifyLastUpdatedTime() {
+        document.getElementById('last-updated').innerText = 'Verifying...';
+        await getLastUpdatedTime();
+        alert("Last modified time has been successfully verified from GitHub API.");
+    }
+    // Initial load to display the time on page load
+    window.onload = getLastUpdatedTime;
+</script>
+
+
+ <!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Word count function ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+<!-- Placeholder for total word count -->
+<p id="totalWordCount"></p>
+<hr>
+<script>
+  // Function to calculate and display word count for a specified section
+  function displayWordCount(sectionId, outputId) {
+    // Get the text content from the specified section
+    const text = document.getElementById(sectionId).textContent;
+    // Split text into words based on spaces and filter out any empty strings
+    const wordArray = text.trim().split(/\s+/);
+    // Count the words
+    const wordCount = wordArray.length;
+    // Return the word count for summing purposes
+    return wordCount;
+  }
+  // Function to calculate and display total word count from selected sections
+  function displayTotalWordCount() {
+    // Calculate word count for each section and accumulate the total
+    const IntroductionCount = displayWordCount("Introduction_InText");
+    const AnalysisCount = displayWordCount("Analysis_InText");
+const TableCount = displayWordCount("Table_InText");
+    // Calculate the sum of all selected sections
+    const totalWordCount = IntroductionCount + AnalysisCount + TableCount;
+    // Display the total word count
+    document.getElementById("totalWordCount").innerText = `Total word count: ${totalWordCount}`;
+  }
+  // Run the function for specific sections and display total count when the page loads
+  window.onload = displayTotalWordCount;
+</script>
     
     <h3 id="References">References</h3>
     <div class="content">
